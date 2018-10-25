@@ -23,11 +23,29 @@
 <body bgcolor = "#FFFFFF">
 
 <?php
+include("config.php");
 session_start();
 
 if(!isset($_SESSION['user_id'])) {
     header("location: index.php");
+} else {
+    if(isset($_POST['create'])) {
+        $mytitle = $_POST['title'];
+        $mytext = $_POST['text'];
+        $myid = $_SESSION['user_id'];
+        $myname = $_SESSION['user_login'];
+        $mydate = date('Y-m-d G:i:s');
+
+        echo "$mytitle $mytext $myid $myname $mydaete";
+
+        $sql = "INSERT INTO blog_posts (author_id, title, date, text) VALUES (?, ?, ?, ?)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$myid, $mytitle, $mydate, $mytext]);
+        header("location: posts.php");
+    }
 }
+
+
 
 ?>
 
@@ -38,8 +56,8 @@ if(!isset($_SESSION['user_id'])) {
         <div style = "margin:60px">
 
             <form action = "" method = "post">
-                <label>Title  :</label><input type = "text" name = "title" class = "box"/><br /><br />
-                <p><textarea rows="10" cols="60" name="text"></textarea></p><br /><br />
+                <label>Title  :</label><input type = "text" name = "title" class = "box" required/><br /><br />
+                <p><textarea rows="10" cols="60" name="text" required></textarea></p><br /><br />
                 <input type = "submit" name = "create" value = " Create post "/><br />
             </form>
 
