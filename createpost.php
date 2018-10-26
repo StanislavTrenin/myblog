@@ -36,7 +36,7 @@ if(!isset($_SESSION['user_id'])) {
         $myname = $_SESSION['user_login'];
         $mydate = date('Y-m-d G:i:s');
 
-        echo "$mytitle $mytext $myid $myname $mydaete";
+        echo "$mytitle $mytext $myid $myname $mydate";
 
         $sql = "INSERT INTO blog_posts (author_id, title, date, text) VALUES (?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
